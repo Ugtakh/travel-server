@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "id": "cda61c43-37b6-4971-ab05-cbef0f91f172",
+      "name": "Bat",
+      "role": "user",
+      "email": "bat@gmail.com",
+      "password": "$2b$10$ngwSPODEuVMcyJWflU9flOU7C0oNVm7fAGqs5djwSH4qSMf2DtNHS"
+    },
+    {
+      "id": "e027ff81-eafa-4f27-b990-23808253ada2",
+      "name": "Naraa",
+      "role": "user",
+      "email": "naraa@gmail.com",
+      "password": "$2b$10$ljYeUroGS8oE.9.FQlKGTuOsyA.IFFZjVjhx7OXceGIxRmq9aMpB6"
+    },
+    {
+      "id": "f09572b5-69fd-44a7-9317-7483e2bf153e",
+      "name": "Naraa",
+      "role": "user",
+      "email": "naraa@gmail.com",
+      "password": "$2b$10$C/z2TgQVQ9/9OoVAbntaxe0alt0qWNxo7QGSgNGRaIPXOyhpFOAM6"
+    },
+    {
+      "id": "1fe2dd53-78cf-43bb-9f09-73ab9195bb3a",
+      "name": "saraa",
+      "role": "user",
+      "email": "saraa@gmail.com",
+      "password": "$2b$10$Sgd.77iWLU40K2DzjyODCObTHBKnNcEBdsfr8g5/PE5mbQAMQpc5e"
+    },
+    {
+      "id": "4380b2f7-4a7a-4b79-815e-93ec4358bb5a",
+      "name": "saraa",
+      "role": "user",
+      "email": "saraa@gmail.com",
+      "password": "$2b$10$2wYElgR6lhb3Kzn0rm5.Ve48H1VHBExZLS5siU6NowWkMeJYml80y"
+    }
+  ]
+}
