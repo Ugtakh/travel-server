@@ -3,6 +3,7 @@ const cors = require("cors");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
+const { CLIENT_RENEG_LIMIT } = require("tls");
 
 const port = 8000;
 
@@ -14,6 +15,7 @@ server.get("/", (req, res) => {
   res.status(200).json({ message: "Hello Express Server" });
 });
 
+// Start of User
 server.post("/signup", (req, res) => {
   const { name, role = "user", email, password } = req.body;
   const data = fs.readFileSync("users.json", "utf-8");
@@ -102,6 +104,39 @@ server.delete("/users/:id", (req, res) => {
     .status(201)
     .json({ message: `${id} тай хэрэглэгч амжилттай устгагдлаа.` });
 });
+
+// End of User
+
+//Start of Category
+server.post("/categories", (req, res) => {
+  // req.body;
+
+  try {
+    const content = fs.readFileSync("categories.json", "utf-8");
+    console.log("Con", content);
+    const data = JSON.parse(content);
+    console.log("Data", data.categories);
+    const newData = { ...req.body };
+    data.categories.push(newData);
+    fs.writeFileSync("categories.json", JSON.stringify(data));
+    res.status(201).json({ message: "Амжилттай үүсгэлээ.", data: newData });
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+});
+
+server.get("/categories", (req, res) => {
+  try {
+    const categoriesData = fs.readFileSync("categories.json", "utf-8");
+    console.log("CC", categoriesData);
+    const data = JSON.parse(categoriesData);
+    console.log("DD", data);
+    res.status(200).json({ message: "success", data });
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+});
+//End of Category
 
 server.listen(port, () => {
   console.log(`Server is running at ${port}`);
