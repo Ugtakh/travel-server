@@ -25,6 +25,34 @@ router.get("/:id", (req, res) => {
   res.status(200).json({ user });
 });
 
+router.post("/signin", (req, res) => {
+  const data = fs.readFileSync("users.json", "utf-8");
+  const parsedData = JSON.parse(data);
+  const findUser = parsedData.users.find(
+    (user) => user.email === req.body.email
+  );
+
+  if (!findUser) {
+    return res
+      .status(401)
+      .json({ message: "Ийм хэрэглэгч олдсонгүй", user: null });
+  }
+
+  const isValid = bcrypt.compareSync(req.body.password, findUser.password);
+
+  const { password, ...restParam } = findUser;
+
+  if (isValid) {
+    res
+      .status(200)
+      .json({ message: "Амжилттай нэвтэрлээ.", user: { ...restParam } });
+  } else {
+    return res
+      .status(401)
+      .json({ message: "Имэйл эсвэл нууц үг буруу байна ш дээ.", user: null });
+  }
+});
+
 module.exports = router;
 
 /**
@@ -52,26 +80,7 @@ server.post("/signup", (req, res) => {
   res.status(201).json({ message: "Шинэ хэрэглэгчийгн амжилттай бүртгэлээ." });
 });
 
-server.post("/signin", (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);
-  const data = fs.readFileSync("users.json", "utf-8");
-  const parsedData = JSON.parse(data);
-  const findUser = parsedData.users.find((user) => user.email === email);
-  console.log(findUser);
-  if (!findUser) {
-    return res.status(401).json({ message: "Ийм хэрэглэгч олдсонгүй" });
-  }
-
-  const isCheck = bcrypt.compareSync(password, findUser.password);
-  if (isCheck) {
-    res.status(200).json({ message: "Амжилттай нэвтэрлээ.", user: findUser });
-  } else {
-    return res
-      .status(401)
-      .json({ message: "Имэйл эсвэл нууц үг буруу байна ш дээ.", user: null });
-  }
-});
+server
 
 server.get("/users", (req, res) => {
   fs.readFile("users.json", "utf-8", (err, data) => {

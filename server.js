@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const usersRoute = require("./routes/users");
 const categoriesRoute = require("./routes/categories");
+const booksRoute = require("./routes/books");
 
 const port = 8000;
 
@@ -13,6 +14,7 @@ server.use(express.json());
 
 server.use("/users", usersRoute);
 server.use("/categories", categoriesRoute);
+server.use("/books", booksRoute);
 
 server.listen(port, () => {
   console.log(`Server is running at ${port}`);
