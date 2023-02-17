@@ -14,9 +14,9 @@ server.use(express.json());
 // own custom middlewares
 server.use(logger);
 // routers
-server.use("api/users", usersRoute);
-server.use("api/categories", categoriesRoute);
-server.use("api/books", booksRoute);
+server.use("/api/users", usersRoute);
+server.use("/api/categories", categoriesRoute);
+server.use("/api/books", booksRoute);
 // test method
 server.get("/", (req, res) => {
   res.json({ message: "Hello From Express Server" });
