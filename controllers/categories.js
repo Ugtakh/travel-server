@@ -28,7 +28,7 @@ const getCategory = (req, res) => {
   }
 };
 
-const getAllCategories = () => {
+const getAllCategories = (req, res) => {
   try {
     const data = fs.readFileSync(filePath, "utf-8");
     const parsedData = JSON.parse(data);
