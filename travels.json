@@ -1,6 +1,0 @@
-{
-  "travels": [
-    { "name": "Tokyo", "category": "Japan", "price": 1000 },
-    { "name": "Seoul", "category": "Korea", "price": 2000 }
-  ]
-}
