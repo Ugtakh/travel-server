@@ -19,7 +19,7 @@ server.use("api/categories", categoriesRoute);
 server.use("api/books", booksRoute);
 // test method
 server.get("/", (req, res) => {
-  res.send("Hello From Express Server");
+  res.json({ message: "Hello From Express Server" });
 });
 // server listen
 server.listen(port, () => {
