@@ -12,7 +12,7 @@ const createCategory = (req, res) => {
     fs.writeFileSync(filePath, JSON.stringify(parsedData));
     res.status(201).json({ message: "Амжилттай үүсгэлээ.", data: newData });
   } catch (err) {
-    return res.status(400).json({ message: err.message });
+    return res.status(400).json({ message: "failed", error: err.message });
   }
 };
 
@@ -29,13 +29,13 @@ const getCategory = (req, res) => {
 };
 
 const getAllCategories = (req, res) => {
-  try {
-    const data = fs.readFileSync(filePath, "utf-8");
-    const parsedData = JSON.parse(data);
-    res.status(200).json({ message: "success", data: parsedData.datas });
-  } catch (err) {
-    return res.status(400).json({ message: err.message });
-  }
+  // try {
+  const data = fs.readFileSync(filePath, "utf-8");
+  const parsedData = JSON.parse(data);
+  res.status(200).json({ message: "success", data: parsedData.datas });
+  // } catch (err) {
+  //   return res.status(400).json({ message: "failed", error: err.message });
+  // }
 };
 
 const updateCategory = (req, res) => {
