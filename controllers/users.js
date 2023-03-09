@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const connection = require("../config/db");
 
 const filePath = "./data/users.json";
 
@@ -23,25 +24,25 @@ const getUser = (req, res) => {
 };
 
 const createUser = (req, res) => {
-  const { name, role = "user", email, password } = req.body;
-  const data = fs.readFileSync(filePath, "utf-8");
-  const parsedData = JSON.parse(data);
-  const id = uuidv4();
+  const { name, email, password, phoneNumber } = req.body;
   const salted = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salted);
 
-  const newUser = {
-    id,
-    name,
-    role,
-    email,
-    password: hashedPassword,
-  };
-
-  parsedData.datas.push(newUser);
-  fs.writeFileSync(filePath, JSON.stringify(parsedData));
-
-  res.status(201).json({ message: "Шинэ хэрэглэгчийгн амжилттай бүртгэлээ." });
+  const query =
+    "INSERT INTO user (id, role, name,email,password, phone_number, profileImg) VALUES(null, null, ?, ?, ?, ?, ?)";
+  connection.query(
+    query,
+    [name, email, hashedPassword, phoneNumber, "url"],
+    (err, result) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      res
+        .status(201)
+        .json({ message: "Шинэ хэрэглэгч амжилттай бүртгэгдлээ." });
+    }
+  );
 };
 
 const updateUser = (req, res) => {
