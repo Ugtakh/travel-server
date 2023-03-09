@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
 const connection = require("../config/db");
 
 const filePath = "./data/users.json";
@@ -17,10 +18,14 @@ const getAllUsers = (req, res) => {
 
 const getUser = (req, res) => {
   const { id } = req.params;
-  const data = fs.readFileSync(filePath, "utf-8");
-  const parsedData = JSON.parse(data);
-  const user = parsedData.datas.find((el) => el.id === id);
-  res.status(200).json({ user });
+  const query = `SELECT * FROM user WHERE id=?`;
+  connection.query(query, [id], (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.status(200).json({ data: result[0] });
+  });
 };
 
 const createUser = (req, res) => {
@@ -28,8 +33,14 @@ const createUser = (req, res) => {
   const salted = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salted);
 
+  // console.log(name);
+  // console.log(email);
+  // console.log(password);
+  // console.log(phoneNumber);
+  // res.status(201).json({ message: "OK" });
+
   const query =
-    "INSERT INTO user (id, role, name,email,password, phone_number, profileImg) VALUES(null, null, ?, ?, ?, ?, ?)";
+    "INSERT INTO user (id, name,email,password, phone_number, profileImg) VALUES(null, ?, ?, ?, ?, ?)";
   connection.query(
     query,
     [name, email, hashedPassword, phoneNumber, "url"],

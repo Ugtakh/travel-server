@@ -19,6 +19,9 @@ server.use("/api/users", usersRoute);
 server.use("/api/categories", categoriesRoute);
 server.use("/api/books", booksRoute);
 // test method
+server.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 // server listen
 server.listen(port, () => {
